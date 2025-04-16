@@ -1,7 +1,18 @@
 const pool = require("./pool");
 
 async function getAllGames() {
-  const { rows } = await pool.query("SELECT * FROM games");
+  const { rows } = await pool.query(`
+    SELECT
+      games.id,
+      games.title,
+      games.description,
+      games.price,
+      genres.category AS genre,
+      developers.company AS developer
+    FROM games
+    JOIN genres ON games.genre_id = genres.id
+    JOIN developers ON games.developer_id = developers.id
+    `);
   return rows;
 }
 
