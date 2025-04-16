@@ -22,8 +22,8 @@
                     <p><%= game.description %></p>
                     <p><%= game.developer %></p>
                     <p>$<%= game.price %></p>
-                    <button>Edit</button>
-                    <button>Delete</button>
+                    <button class="border border-amber-600 mx-4 px-4"><a href="/edit/<%= game.id %>">Edit</a></button>
+                    <button><a href="/delete">Delete</a></button>
                 </div>
                 
              <% }) %>

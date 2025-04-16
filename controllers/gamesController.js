@@ -34,6 +34,39 @@ createGamePost = async (req, res) => {
   }
 };
 
+editGameGet = async (req, res) => {
+  const gameId = req.params.id;
+  const game = await db.getGameById(gameId);
+  const genres = await db.getAllGenres();
+  const developers = await db.getAllDevelopers();
+
+  res.render("games/edit", {
+    title: "Edit Game",
+    game,
+    genres,
+    developers,
+  });
+};
+
+editGamePost = async (req, res) => {
+  const id = req.params.id;
+  const { title, description, price, genre_id, developer_id } = req.body;
+
+  try {
+    await db.updateGame(id, {
+      title,
+      description,
+      price,
+      genre_id,
+      developer_id,
+    });
+    res.redirect("/");
+  } catch (err) {
+    console.error("Error updating game: ", err);
+    res.status(500).send("Server error");
+  }
+};
+
 createGenrePost = async (req, res) => {};
 
 module.exports = {
@@ -41,4 +74,6 @@ module.exports = {
   createGameGet,
   createGamePost,
   createGenrePost,
+  editGameGet,
+  editGamePost,
 };

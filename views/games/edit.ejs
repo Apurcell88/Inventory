@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="../css/output.css">
+</head>
+<body>
+    <%- include('../partials/nav.ejs') %>
+    <div class="bg-black h-screen grid grid-cols-6">
+        <%- include('../partials/aside.ejs') %>
+        
+        <div class="col-span-5 text-white flex items-center justify-center min-h-screen">
+          <div class="bg-gray-800 p-10 rounded-xl shadow-lg w-full max-w-lg">
+            <h1 class="text-2xl font-semibold mb-6 text-center"><%= title %></h1>
+        
+            <form action="/edit/<%= game.id %>" method="POST" class="space-y-4">
+              <div>
+                <label for="title" class="block mb-1">Title:</label>
+                <input type="text" name="title" id="title" value="<%= game.title %>"
+                       class="w-full p-2 rounded bg-gray-700 border border-gray-600">
+              </div>
+        
+              <div>
+                <label for="description" class="block mb-1">Description:</label>
+                <input type="text" name="description" id="description" value="<%= game.description %>"
+                       class="w-full p-2 rounded bg-gray-700 border border-gray-600">
+              </div>
+        
+              <div>
+                <label for="genre_id" class="block mb-1">Genre:</label>
+                <select name="genre_id" id="genre_id" class="w-full p-2 rounded bg-gray-700 border border-gray-600">
+                    <% genres.forEach(genre => { %>
+                      <option value="<%= genre.id %>" <%= genre.id === game.genre_id ? "selected" : "" %>>
+                        <%= genre.category %>
+                      </option>
+                    <% }); %>
+                  </select>
+              </div>
+        
+              <div>
+                <label for="price" class="block mb-1">Price:</label>
+                <input type="text" name="price" id="price" value="<%= game.price %>"
+                       class="w-full p-2 rounded bg-gray-700 border border-gray-600">
+              </div>
+        
+              <div>
+                <label for="developer_id" class="block mb-1">Developer:</label>
+                <select name="developer_id" id="developer_id" class="w-full p-2 rounded bg-gray-700 border border-gray-600">
+                    <% developers.forEach(dev => { %>
+                      <option value="<%= dev.id %>" <%= dev.id === game.developer_id ? "selected" : "" %>>
+                        <%= dev.company %>
+                      </option>
+                    <% }); %>
+                  </select>
+              </div>
+        
+              <div>
+                <input type="submit" value="Save"
+                       class="w-full bg-green-600 hover:bg-green-500 p-2 rounded font-semibold cursor-pointer">
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        
+    </div>
+</body>
+</html>
