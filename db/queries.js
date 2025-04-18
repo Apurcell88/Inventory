@@ -69,6 +69,16 @@ async function getGameById(id) {
   return rows[0];
 }
 
+async function deleteGame(id) {
+  await pool.query(
+    `
+    DELETE FROM games
+    WHERE id = $1
+    `,
+    [id]
+  );
+}
+
 async function getAllGenres() {
   const { rows } = await pool.query("SELECT * FROM genres");
   return rows;
@@ -83,6 +93,7 @@ module.exports = {
   getAllGames,
   createGame,
   updateGame,
+  deleteGame,
   getAllGenres,
   getAllDevelopers,
   getGameById,

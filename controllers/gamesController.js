@@ -67,6 +67,32 @@ editGamePost = async (req, res) => {
   }
 };
 
+deleteGameGet = async (req, res) => {
+  const id = req.params.id;
+  const game = await db.getGameById(id);
+
+  if (!game) {
+    return res.status(400).send("Game not found");
+  }
+
+  res.render("games/delete", {
+    title: "Confirm Delete",
+    game,
+  });
+};
+
+deleteGamePost = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    await db.deleteGame(id);
+    res.redirect("/");
+  } catch (err) {
+    console.error("Error deleting game: ", err);
+    res.status(500).send("Server error");
+  }
+};
+
 createGenrePost = async (req, res) => {};
 
 module.exports = {
@@ -76,4 +102,6 @@ module.exports = {
   createGenrePost,
   editGameGet,
   editGamePost,
+  deleteGameGet,
+  deleteGamePost,
 };
