@@ -85,16 +85,19 @@ deleteGamePost = async (req, res) => {
   const id = req.params.id;
   await db.deleteGame(id);
 
-  req.session.message = "Game deleted successfully!";
+  req.session.message = "Game deleted successfully!"; // adds message onto request session
   res.redirect("/");
+};
 
-  // try {
-  //   await db.deleteGame(id);
-  //   res.redirect("/");
-  // } catch (err) {
-  //   console.error("Error deleting game: ", err);
-  //   res.status(500).send("Server error");
-  // }
+searchGameGet = async (req, res) => {
+  const { title } = req.query;
+
+  const games = await db.searchGame(title);
+
+  res.render("index", {
+    title: "Search Results",
+    games,
+  });
 };
 
 createGenrePost = async (req, res) => {};
@@ -108,4 +111,5 @@ module.exports = {
   editGamePost,
   deleteGameGet,
   deleteGamePost,
+  searchGameGet,
 };

@@ -79,6 +79,14 @@ async function deleteGame(id) {
   );
 }
 
+async function searchGame(title) {
+  const { rows } = await pool.query(
+    "SELECT * FROM games WHERE LOWER(title) LIKE LOWER($1)",
+    [`%${title}%`]
+  );
+  return rows;
+}
+
 async function getAllGenres() {
   const { rows } = await pool.query("SELECT * FROM genres");
   return rows;
@@ -94,6 +102,7 @@ module.exports = {
   createGame,
   updateGame,
   deleteGame,
+  searchGame,
   getAllGenres,
   getAllDevelopers,
   getGameById,

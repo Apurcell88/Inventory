@@ -13,4 +13,6 @@ gamesRouter.post("/edit/:id", gamesController.editGamePost);
 gamesRouter.get("/delete/:id", gamesController.deleteGameGet);
 gamesRouter.post("/delete/:id", gamesController.deleteGamePost);
 
+gamesRouter.get("/search", gamesController.searchGameGet);
+
 module.exports = gamesRouter;
