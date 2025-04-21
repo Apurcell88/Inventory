@@ -83,14 +83,18 @@ deleteGameGet = async (req, res) => {
 
 deleteGamePost = async (req, res) => {
   const id = req.params.id;
+  await db.deleteGame(id);
 
-  try {
-    await db.deleteGame(id);
-    res.redirect("/");
-  } catch (err) {
-    console.error("Error deleting game: ", err);
-    res.status(500).send("Server error");
-  }
+  req.session.message = "Game deleted successfully!";
+  res.redirect("/");
+
+  // try {
+  //   await db.deleteGame(id);
+  //   res.redirect("/");
+  // } catch (err) {
+  //   console.error("Error deleting game: ", err);
+  //   res.status(500).send("Server error");
+  // }
 };
 
 createGenrePost = async (req, res) => {};

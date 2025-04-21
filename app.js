@@ -1,10 +1,23 @@
 const express = require("express");
 const app = express();
+const session = require("express-session");
 const gamesRouter = require("./routes/gamesRouter");
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: "my-secret-key",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use((req, res, next) => {
+  res.locals.message = req.session.message;
+  delete req.session.message;
+  next();
+});
 app.use("/", gamesRouter);
 app.use("/games", gamesRouter);
 

@@ -17,5 +17,18 @@
         </div>
     </nav>
     
+    <% if (message) { %>
+        <div id="toast-message" class="fixed top-5 right-5 bg-green-600 text-white px-4 py-2 rounded shadow-lg transition-opacity duration-300 z-50">
+          <%= message %>
+        </div>
+      
+        <script>
+          setTimeout(() => {
+            const toast = document.getElementById('toast-message');
+            if (toast) toast.style.opacity = '0';
+          }, 3000); // disappears after 3 seconds
+        </script>
+    <% } %>
+      
 </body>
 </html>
