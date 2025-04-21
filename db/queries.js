@@ -81,7 +81,21 @@ async function deleteGame(id) {
 
 async function searchGame(title) {
   const { rows } = await pool.query(
-    "SELECT * FROM games WHERE LOWER(title) LIKE LOWER($1)",
+    `
+    SELECT
+      games.id,
+      games.title,
+      games.description,
+      games.price,
+      genres.category AS genre,
+      developers.company AS developer,
+      games.genre_id,
+      games.developer_id
+    FROM games
+    JOIN genres ON games.genre_id = genres.id
+    JOIN developers ON games.developer_id = developers.id
+    WHERE LOWER(games.title) LIKE LOWER($1)
+    `,
     [`%${title}%`]
   );
   return rows;
