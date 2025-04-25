@@ -1,5 +1,6 @@
 const db = require("../db/queries");
 
+// GAMES
 allGamesGet = async (req, res) => {
   const games = await db.getAllGames();
   console.log("All games: ", games);
@@ -100,16 +101,31 @@ searchGameGet = async (req, res) => {
   });
 };
 
-createGenrePost = async (req, res) => {};
+// GENRES
+createGenreGet = async (req, res) => {
+  res.render("genres/create", {
+    title: "Create New Genre",
+  });
+};
+
+createGenrePost = async (req, res) => {
+  const { category } = req.body;
+
+  if (category) {
+    alert("Category already exists");
+    return;
+  }
+};
 
 module.exports = {
   allGamesGet,
   createGameGet,
   createGamePost,
-  createGenrePost,
   editGameGet,
   editGamePost,
   deleteGameGet,
   deleteGamePost,
   searchGameGet,
+  createGenreGet,
+  createGenrePost,
 };
