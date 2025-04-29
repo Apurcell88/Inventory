@@ -3,11 +3,12 @@ const db = require("../db/queries");
 // GAMES
 allGamesGet = async (req, res) => {
   const games = await db.getAllGames();
-  console.log("All games: ", games);
-  // need to map through the games for their values - do this in index.ejs???
+  const genres = await db.getAllGenres();
+
   res.render("index", {
     title: "All games",
     games,
+    genres,
   });
 };
 
@@ -103,18 +104,48 @@ searchGameGet = async (req, res) => {
 
 // GENRES
 createGenreGet = async (req, res) => {
+  const genres = await db.getAllGenres();
+
   res.render("genres/create", {
     title: "Create New Genre",
+    genres,
   });
 };
 
 createGenrePost = async (req, res) => {
   const { category } = req.body;
 
-  if (category) {
-    alert("Category already exists");
-    return;
+  try {
+    const exists = await db.genreExists(category);
+
+    if (exists) {
+      return res.render("genres/create", {
+        title: "Add Genre",
+        error: "Genre already exists",
+        category,
+      });
+    }
+
+    await db.createGenre(category);
+    res.redirect("/");
+  } catch (err) {
+    console.error("Error creating genre: ", err);
+    res.status(500).send("Server Error");
   }
+};
+
+deleteGenreGet = async (req, res) => {
+  const { id } = req.params;
+  const [genre] = await db.getGenreById(id);
+  if (!genre) return res.status(404).send("Genre not found");
+
+  res.render("genres/delete", { title: "Confirm Delete", genre });
+};
+
+deleteGenrePost = async (req, res) => {
+  const { id } = req.params;
+  await db.deleteGenre(id);
+  res.redirect("/");
 };
 
 module.exports = {
@@ -128,4 +159,6 @@ module.exports = {
   searchGameGet,
   createGenreGet,
   createGenrePost,
+  deleteGenreGet,
+  deleteGenrePost,
 };

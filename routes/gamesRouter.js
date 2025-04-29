@@ -18,4 +18,7 @@ gamesRouter.get("/search", gamesController.searchGameGet);
 gamesRouter.get("/genres/create", gamesController.createGenreGet);
 gamesRouter.post("/genres/create", gamesController.createGenrePost);
 
+gamesRouter.get("/genres/delete/:id", gamesController.deleteGenreGet);
+gamesRouter.post("/genres/delete/:id", gamesController.deleteGenrePost);
+
 module.exports = gamesRouter;

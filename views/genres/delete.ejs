@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="../css/output.css" >
+</head>
+<body class="bg-gray-900 text-white flex justify-center items-center h-screen">
+  <div class="bg-gray-800 p-6 rounded-md shadow-md text-center">
+    <h1 class="text-xl mb-4">Are you sure you want to delete "<%= genre.category %>"?</h1>
+    
+    <form action="/genres/delete/<%= genre.id %>" method="POST" class="space-x-4">
+      <button type="submit" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700">Yes, Delete</button>
+      <a href="/" class="bg-gray-600 px-4 py-2 rounded hover:bg-gray-700">Cancel</a>
+    </form>
+  </div>
+</body>
+</html>

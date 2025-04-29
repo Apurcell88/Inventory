@@ -101,14 +101,36 @@ async function searchGame(title) {
   return rows;
 }
 
+// GENRES
 async function getAllGenres() {
   const { rows } = await pool.query("SELECT * FROM genres");
   return rows;
 }
 
+async function getGenreById(id) {
+  const { rows } = await pool.query("SELECT * FROM genres WHERE id = $1", [id]);
+  return rows;
+}
+
+async function genreExists(category) {
+  const { rows } = await pool.query(
+    "SELECT FROM genres WHERE LOWER(category) = LOWER($1)",
+    [category]
+  );
+  return rows.length > 0;
+}
+
+async function createGenre(category) {
+  await pool.query("INSERT INTO genres (category) VALUES ($1)", [category]);
+}
+
 async function getAllDevelopers() {
   const { rows } = await pool.query("SELECT * FROM developers");
   return rows;
+}
+
+async function deleteGenre(id) {
+  await pool.query("DELETE FROM genres WHERE id = $1", [id]);
 }
 
 module.exports = {
@@ -120,4 +142,8 @@ module.exports = {
   getAllGenres,
   getAllDevelopers,
   getGameById,
+  getGenreById,
+  genreExists,
+  createGenre,
+  deleteGenre,
 };
