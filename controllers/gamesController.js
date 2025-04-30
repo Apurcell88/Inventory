@@ -163,6 +163,8 @@ gamesByGenreGet = async (req, res) => {
   });
 };
 
+// DEVELOPERS
+
 module.exports = {
   allGamesGet,
   createGameGet,

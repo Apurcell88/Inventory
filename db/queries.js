@@ -1,5 +1,6 @@
 const pool = require("./pool");
 
+// GAMES
 async function getAllGames() {
   const { rows } = await pool.query(`
     SELECT
@@ -158,6 +159,8 @@ async function getGamesByGenreId(genreId) {
 
   return rows;
 }
+
+// DEVELOPERS
 
 module.exports = {
   getAllGames,
