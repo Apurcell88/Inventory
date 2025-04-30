@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="col-span-1 text-center text-white pt-6 border-r-4 border-r-gray-800 ">
-        <h2 class="text-2xl border-b-2 border-amber-600 inline-block">Categories</h2>
+        <h2 class="text-2xl border-b-2 border-amber-600 inline-block">Genres</h2>
         <!-- we'll have to map over categories. Can use dummy data for now -->
          <ul class="pt-6 flex flex-col gap-4">
             <!-- <li><a href="">RPG</a></li>
@@ -16,11 +16,12 @@
             <li><a href="">Shooter</a></li> -->
             <% genres.forEach((genre) => { %>
                 <li class="flex justify-between items-center group px-4">
-                    <a href="#"><%= genre.category %></a>
+                    <a href="/genres/<%= genre.id %>" class="hover:text-amber-500">
+                        <%= genre.category %>
+                      </a>
                     <button type="submit" class="text-red-500 opacity-0 group-hover:opacity-100 cursor-pointer transition duration-200" title="Delete category">
                         <a href="/genres/delete/<%= genre.id %>">&times;</a>
                     </button>
-                    
                 </li>
             <% }) %>
          </ul>

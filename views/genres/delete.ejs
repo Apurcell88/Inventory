@@ -2,17 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
-  <link rel="stylesheet" href="../css/output.css" >
+  <link rel="stylesheet" href="/css/output.css" >
 </head>
-<body class="bg-gray-900 text-white flex justify-center items-center h-screen">
-  <div class="bg-gray-800 p-6 rounded-md shadow-md text-center">
-    <h1 class="text-xl mb-4">Are you sure you want to delete "<%= genre.category %>"?</h1>
+<body>
+  <div class="bg-black text-white h-screen flex flex-col justify-center items-center gap-3">
+    <h1>Are you sure you want to delete "<%= genre.category %>"?</h1>
     
-    <form action="/genres/delete/<%= genre.id %>" method="POST" class="space-x-4">
-      <button type="submit" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700">Yes, Delete</button>
-      <a href="/" class="bg-gray-600 px-4 py-2 rounded hover:bg-gray-700">Cancel</a>
+    <form action="/genres/delete/<%= genre.id %>" method="POST">
+        <button type="submit" class="bg-red-600 px-4 py-2 text-white rounded">Yes, Delete</button>
+        <a href="/" class="ml-4 text-blue-400">Cancel</a>
     </form>
-  </div>
+    
+    
+</div>
 </body>
 </html>

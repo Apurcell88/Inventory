@@ -7,7 +7,7 @@ allGamesGet = async (req, res) => {
 
   res.render("index", {
     title: "All games",
-    games,
+    games: games || [],
     genres,
   });
 };
@@ -94,11 +94,13 @@ deleteGamePost = async (req, res) => {
 searchGameGet = async (req, res) => {
   const { title } = req.query;
 
+  const genres = await db.getAllGenres();
   const games = await db.searchGame(title);
 
   res.render("index", {
     title: "Search Results",
     games,
+    genres,
   });
 };
 
@@ -136,7 +138,7 @@ createGenrePost = async (req, res) => {
 
 deleteGenreGet = async (req, res) => {
   const { id } = req.params;
-  const [genre] = await db.getGenreById(id);
+  const [genre] = await db.getGenresById(id);
   if (!genre) return res.status(404).send("Genre not found");
 
   res.render("genres/delete", { title: "Confirm Delete", genre });
@@ -146,6 +148,19 @@ deleteGenrePost = async (req, res) => {
   const { id } = req.params;
   await db.deleteGenre(id);
   res.redirect("/");
+};
+
+gamesByGenreGet = async (req, res) => {
+  const { id } = req.params;
+  const games = await db.getGamesByGenreId(id);
+  const genres = await db.getAllGenres();
+  const genre = await db.getGenreById(id);
+
+  res.render("index", {
+    title: genre ? `${genre.category} Games` : "Games by Genre",
+    games,
+    genres,
+  });
 };
 
 module.exports = {
@@ -161,4 +176,5 @@ module.exports = {
   createGenrePost,
   deleteGenreGet,
   deleteGenrePost,
+  gamesByGenreGet,
 };

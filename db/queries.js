@@ -109,6 +109,11 @@ async function getAllGenres() {
 
 async function getGenreById(id) {
   const { rows } = await pool.query("SELECT * FROM genres WHERE id = $1", [id]);
+  return rows[0];
+}
+
+async function getGenresById(id) {
+  const { rows } = await pool.query("SELECT * FROM genres WHERE id = $1", [id]);
   return rows;
 }
 
@@ -133,6 +138,27 @@ async function deleteGenre(id) {
   await pool.query("DELETE FROM genres WHERE id = $1", [id]);
 }
 
+async function getGamesByGenreId(genreId) {
+  const { rows } = await pool.query(
+    `
+    SELECT
+      games.id,
+      games.title,
+      games.description,
+      games.price,
+      developers.company AS developer,
+      genres.category AS genre
+    FROM games
+    JOIN developers ON games.developer_id = developers.id
+    JOIN genres on games.genre_id = genres.id
+    WHERE genres.id = $1
+    `,
+    [genreId]
+  );
+
+  return rows;
+}
+
 module.exports = {
   getAllGames,
   createGame,
@@ -143,7 +169,9 @@ module.exports = {
   getAllDevelopers,
   getGameById,
   getGenreById,
+  getGenresById,
   genreExists,
   createGenre,
   deleteGenre,
+  getGamesByGenreId,
 };
