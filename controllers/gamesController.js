@@ -4,11 +4,13 @@ const db = require("../db/queries");
 allGamesGet = async (req, res) => {
   const games = await db.getAllGames();
   const genres = await db.getAllGenres();
+  const developers = await db.getAllDevelopers();
 
   res.render("index", {
     title: "All games",
     games: games || [],
     genres,
+    developers,
   });
 };
 
@@ -96,21 +98,25 @@ searchGameGet = async (req, res) => {
 
   const genres = await db.getAllGenres();
   const games = await db.searchGame(title);
+  const developers = await db.getAllDevelopers();
 
   res.render("index", {
     title: "Search Results",
     games,
     genres,
+    developers,
   });
 };
 
 // GENRES
 createGenreGet = async (req, res) => {
   const genres = await db.getAllGenres();
+  const developers = await db.getAllDevelopers();
 
   res.render("genres/create", {
     title: "Create New Genre",
     genres,
+    developers,
   });
 };
 
@@ -155,15 +161,45 @@ gamesByGenreGet = async (req, res) => {
   const games = await db.getGamesByGenreId(id);
   const genres = await db.getAllGenres();
   const genre = await db.getGenreById(id);
+  const developers = await db.getAllDevelopers();
 
   res.render("index", {
     title: genre ? `${genre.category} Games` : "Games by Genre",
     games,
     genres,
+    developers,
   });
 };
 
 // DEVELOPERS
+createDeveloperGet = async (req, res) => {
+  const genres = await db.getAllGenres();
+  const developers = await db.getAllDevelopers();
+
+  res.render("developers/create", {
+    title: "Create Developer",
+    genres,
+    developers,
+  });
+};
+
+createDeveloperPost = async (req, res) => {};
+
+deleteDeveloperGet = async (req, res) => {
+  const id = req.params.id;
+  const developer = await db.getDeveloperById(id);
+
+  res.render("developers/delete", {
+    title: "Delete Developer",
+    developer,
+  });
+};
+
+deleteDeveloperPost = async (req, res) => {
+  const { id } = req.params;
+  await db.deleteDeveloper(id);
+  res.redirect("/");
+};
 
 module.exports = {
   allGamesGet,
@@ -179,4 +215,8 @@ module.exports = {
   deleteGenreGet,
   deleteGenrePost,
   gamesByGenreGet,
+  createDeveloperGet,
+  createDeveloperPost,
+  deleteDeveloperGet,
+  deleteDeveloperPost,
 };
