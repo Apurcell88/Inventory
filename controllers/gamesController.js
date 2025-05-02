@@ -183,7 +183,27 @@ createDeveloperGet = async (req, res) => {
   });
 };
 
-createDeveloperPost = async (req, res) => {};
+createDeveloperPost = async (req, res) => {
+  const { company } = req.body;
+
+  try {
+    const exists = await db.developerExists(company);
+
+    if (exists) {
+      return res.render("developers/create", {
+        title: "Add Developer",
+        error: "Developer already exists",
+        company,
+      });
+    }
+
+    await db.createDeveloper(company);
+    res.redirect("/");
+  } catch (err) {
+    console.error("Error creating developer: ", err);
+    res.status(500).send("Server Error");
+  }
+};
 
 deleteDeveloperGet = async (req, res) => {
   const id = req.params.id;

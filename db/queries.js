@@ -168,10 +168,16 @@ async function getDeveloperById(id) {
   return rows[0];
 }
 
+async function developerExists(company) {
+  const { rows } = await pool.query(
+    "SELECT * FROM developers WHERE LOWER(company) = LOWER($1)",
+    [company]
+  );
+  return rows.length > 0;
+}
+
 async function createDeveloper(company) {
-  await pool.query(`INSERT INTO developers (company) WHERE values ($1)`, [
-    company,
-  ]);
+  await pool.query(`INSERT INTO developers (company) VALUES ($1)`, [company]);
 }
 
 async function deleteDeveloper(id) {
@@ -186,7 +192,6 @@ module.exports = {
   deleteGame,
   searchGame,
   getAllGenres,
-
   getGameById,
   getGenreById,
   getGenresById,
@@ -196,6 +201,7 @@ module.exports = {
   getGamesByGenreId,
   getAllDevelopers,
   getDeveloperById,
+  developerExists,
   createDeveloper,
   deleteDeveloper,
 };
