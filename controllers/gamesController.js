@@ -221,6 +221,21 @@ deleteDeveloperPost = async (req, res) => {
   res.redirect("/");
 };
 
+gamesByDeveloperGet = async (req, res) => {
+  const { id } = req.params;
+  const games = await db.getGamesByDeveloperId(id);
+  const genres = await db.getAllGenres();
+  const developer = await db.getDeveloperById(id);
+  const developers = await db.getAllDevelopers();
+
+  res.render("index", {
+    title: `${developer.company} Games`,
+    games,
+    genres,
+    developers,
+  });
+};
+
 module.exports = {
   allGamesGet,
   createGameGet,
@@ -239,4 +254,5 @@ module.exports = {
   createDeveloperPost,
   deleteDeveloperGet,
   deleteDeveloperPost,
+  gamesByDeveloperGet,
 };

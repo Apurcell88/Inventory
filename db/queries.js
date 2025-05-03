@@ -185,6 +185,27 @@ async function deleteDeveloper(id) {
   await pool.query(`DELETE FROM developers WHERE id = $1`, [id]);
 }
 
+async function getGamesByDeveloperId(developerId) {
+  const { rows } = await pool.query(
+    `
+    SELECT
+      games.id,
+      games.title,
+      games.description,
+      games.price,
+      developers.company AS developer,
+      genres.category AS genre
+    FROM games
+    JOIN developers ON games.developer_id = developers.id
+    JOIN genres on games.genre_id = genres.id
+    WHERE developers.id = $1
+    `,
+    [developerId]
+  );
+
+  return rows;
+}
+
 module.exports = {
   getAllGames,
   createGame,
@@ -204,4 +225,5 @@ module.exports = {
   developerExists,
   createDeveloper,
   deleteDeveloper,
+  getGamesByDeveloperId,
 };
