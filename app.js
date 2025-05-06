@@ -17,13 +17,13 @@ app.use(
     secret: "surfing dog",
   })
 );
-app.use(
-  session({
-    secret: "my-secret-key",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+// app.use(
+//   session({
+//     secret: "my-secret-key",
+//     resave: false,
+//     saveUninitialized: true,
+//   })
+// );
 app.use((req, res, next) => {
   res.locals.message = req.session.message;
   delete req.session.message;
