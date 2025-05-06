@@ -2,7 +2,7 @@
   "name": "inventory",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node index.js",
     "build:css": "npx tailwindcss -i ./src/input.css -o ./public/css/output.css",
