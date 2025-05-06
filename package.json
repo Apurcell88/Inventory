@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node index.js",
-    "build:css": "npx tailwindcss -i ./src/input.css -o ./public/css/output.css",
+    "start": "node app.js",
+    "build:css": "tailwindcss -i ./src/input.css -o ./public/css/output.css",
     "build": "npm run build:css"
   },
   "keywords": [],
