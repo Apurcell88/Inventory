@@ -1,11 +1,22 @@
 const express = require("express");
 const app = express();
 const session = require("express-session");
+const MemoryStore = require("memorystore")(session);
 const gamesRouter = require("./routes/gamesRouter");
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+      checkPeriod: 86400000, // prune expired entries every 24h
+    }),
+    resave: false,
+    secret: "surfing dog",
+  })
+);
 app.use(
   session({
     secret: "my-secret-key",
