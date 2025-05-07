@@ -8,7 +8,7 @@
 </head>
 <body>
     <%- include('./partials/nav.ejs') %>
-    <div class="bg-black h-screen grid grid-cols-6">
+    <div class="bg-black min-h-screen grid grid-cols-6">
         <%- include('./partials/aside.ejs') %>
         
         <div class="col-span-5 text-white">
@@ -19,12 +19,12 @@
             </form>
             
         <!-- we'll have to map over all the games and display them. -->
-        <div class="flex flex-wrap gap-5 items-center mt-9 ml-9">
+        <div class="flex flex-wrap gap-5 items-center justify-center mt-9 px-5 sm:ml-9">
             <% if (games.length === 0) { %>
               <p class="text-white text-xl p-6 w-[30%] text-center">No games found.</p>
             <% } else { %>
               <% games.forEach((game) => { %>
-                <div class="border-4 border-gray-700 w-[30%] text-center flex flex-col gap-2 p-3">
+                <div class="border-4 border-gray-700 w-1/2 sm:w-[30%] text-center flex flex-col gap-2 p-3">
                   <h2><%= game.title %></h2>
                   <p><%= game.description %></p>
                   <p><%= game.developer %></p>
